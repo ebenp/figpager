@@ -25,7 +25,7 @@ setup(
     url="",
     packages=["FigPager"],
     include_package_data=True,
-    package_data={"FigPager": ["page_layout/*.ini"],},
+    package_data={"figpager": ["page_layout/*.ini"],},
     install_requires=["matplotlib",],
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
