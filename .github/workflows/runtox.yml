@@ -1,4 +1,4 @@
-name: figpager
+name: Run Tox
 
 on: [push]
 
