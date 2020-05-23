@@ -15,7 +15,7 @@ def read(fname):
 
 
 setup(
-    name="FigPager",
+    name="figpager",
     version="0.1",
     author="Eben Pendleton",
     author_email="4080051+ebenp@users.noreply.github.com",
@@ -23,7 +23,7 @@ setup(
     license="MIT",
     keywords="figure page matplotlib",
     url="",
-    packages=["FigPager"],
+    packages=["figpager"],
     include_package_data=True,
     package_data={"figpager": ["page_layout/*.ini"],},
     install_requires=["matplotlib",],
