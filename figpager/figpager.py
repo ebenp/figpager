@@ -26,6 +26,8 @@ from matplotlib.gridspec import GridSpec
 import configobj
 # import the validator
 from validate import Validator
+# import package resources to get ini
+import pkg_resources
 
 # set up the base string depending if we are running Python 2 or Python 3
 try:
@@ -66,7 +68,7 @@ class FigPager:
     path = os.path.abspath(__file__)
 
     # used to find ini files saved in the package
-    dir_path = os.path.dirname(path)
+    page_layout_path = pkg_resources.resource_filename('figpager', 'page_layout/')
 
     def __init__(
         self,
@@ -186,7 +188,7 @@ class FigPager:
 
             # read in the ini file of paper sizes
             config = configobj.ConfigObj(
-                os.path.join(self.dir_path, "page_layout", "paper_sizes.ini"),
+                os.path.join(self.page_layout_path, "paper_sizes.ini"),
                 configspec=spec,
             )
 
@@ -308,10 +310,8 @@ class FigPager:
 
         """
 
-        if os.path.isfile(os.path.join(self.dir_path, "page_layout", layout + ".ini")):
-            self.layout_path = os.path.join(
-                self.dir_path, "page_layout", layout + ".ini"
-            )
+        if os.path.isfile(os.path.join(self.page_layout_path, layout + ".ini")):
+            self.layout_path = os.path.join(self.page_layout_path, layout + ".ini")
             self.layout = layout
 
         elif os.path.isfile(layout):
