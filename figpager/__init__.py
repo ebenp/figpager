@@ -1,0 +1,1 @@
+from .figpager import FigPager
