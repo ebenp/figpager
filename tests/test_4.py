@@ -1,10 +1,11 @@
 # Test of adding a subplot in a given location
 
 # Plots from: https://matplotlib.org/3.2.1/gallery/images_contours_and_fields/plot_streamplot.html#sphx-glr-gallery-images-contours-and-fields-plot-streamplot-py
-
 import os
-
 import matplotlib as mpl
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using non-interactive Agg backend')
+    mpl.use('Agg')
 import numpy as np
 
 from figpager import FigPager
@@ -12,9 +13,6 @@ from figpager import FigPager
 # Reference:
 # https://matplotlib.org/devdocs/gallery/subplots_axes_and_figures/subplots_demo.html
 
-if os.environ.get('DISPLAY','') == '':
-    print('no display found. Using non-interactive Agg backend')
-    mpl.use('Agg')
 
 def test_main():
     # Initalize with a configuration that controls page margins
