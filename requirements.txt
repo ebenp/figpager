@@ -1,5 +1,3 @@
-# this installs in editable mode
-# -e .
 .
 
 matplotlib>=2.2.3
