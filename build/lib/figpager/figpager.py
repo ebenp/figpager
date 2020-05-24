@@ -4,21 +4,13 @@ Currently PDF and PGF are supported in a multipage backend.
 
 Written by Eben Pendleton
 """
-import os
-
-# non interactive backend
-import matplotlib as mpl
-if os.environ.get('DISPLAY','') == '':
-    print('no display found. Using non-interactive Agg backend')
-    mpl.use('Agg')
-
 # used to deep copy config
 import copy
 # used in metadata
 import datetime
 # used to find calling path
 import inspect
-
+import os
 
 # used to drwa lines on the figure
 import matplotlib.lines as lines

@@ -1,8 +1,16 @@
 # Test of Report configuration
 
+
+import os
+
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 from figpager import FigPager
+
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using non-interactive Agg backend')
+    mpl.use('Agg')
 
 
 def test_main():
