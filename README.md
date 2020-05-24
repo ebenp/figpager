@@ -1,7 +1,7 @@
 [![Code style:
 black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/ambv/black)
 [![GitHub Workflow
-Status](https://img.shields.io/github/workflow/status/ebenp/figpager/main-ci?style=for-the-badge)](https://github.com/ebenp/figpager/actions)
+Status](https://img.shields.io/github/workflow/status/ebenp/figpager/Run%20Tox?style=for-the-badge)](https://github.com/ebenp/figpager/actions)
 [![PyPI
 version](https://img.shields.io/pypi/v/figpager.svg?style=for-the-badge)](https://pypi.org/project/figpager/)
 [![PyPI
@@ -26,7 +26,7 @@ pip install figpager
 ```
 
 ## Usage
-After install FigPaper can be imported from figpager
+After install FigPager can be imported from figpager
 ```
 from figpager import FigPager
 ```
