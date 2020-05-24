@@ -16,13 +16,17 @@ def read(fname):
 
 setup(
     name="figpager",
-    version="0.1",
+    version="0.11",
     author="Eben Pendleton",
     author_email="4080051+ebenp@users.noreply.github.com",
+    url="https://github.com/ebenp/figpager",
+    project_urls={
+        "Code": "https://github.com/ebenp/figpager",
+        "Issue tracker": "https://github.com/ebenp/figpager/issues",
+    },
     description=("A figure pager class"),
     license="MIT",
     keywords="figure page matplotlib",
-    url="",
     packages=["figpager"],
     include_package_data=True,
     package_data={"figpager": ["page_layout/*.ini"],},
