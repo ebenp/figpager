@@ -97,7 +97,7 @@ See the test code under tests for example code.
 
 ## Development / Testing
 Submit issues and PRs through GitHub. 
-Testing is done with tox. [pytest](https://pypi.org/project/pytest/), [black](https://pypi.org/project/black/) and [isort](https://pypi.org/project/isort/) are run against code.
+Testing is done with [tox](https://pypi.org/project/tox/). [pytest](https://pypi.org/project/pytest/), [black](https://pypi.org/project/black/) and [isort](https://pypi.org/project/isort/) are run against code.
 
 
 ## License
