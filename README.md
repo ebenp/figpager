@@ -101,5 +101,5 @@ Testing is done with tox.
 
 
 ## License
-FigPager is released under the MIT license. 
+figpager is released under the MIT license. 
 See [LICENSE.md](LICENSE.md) for details.
