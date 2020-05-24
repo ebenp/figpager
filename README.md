@@ -26,7 +26,7 @@ pip install figpager
 ```
 
 ## Usage
-After install FigPaper can be imported from figpager
+After install FigPager can be imported from figpager
 ```
 from figpager import FigPager
 ```
