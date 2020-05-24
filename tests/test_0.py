@@ -17,7 +17,8 @@ def test_main():
         "letter",
         3,
         3,
-        outfile=outfile
+        outfile=outfile,
+        overwrite=True,
     )
 
     # ax1 = plt.subplot2grid((3, 3), (0, 0), colspan=3, )

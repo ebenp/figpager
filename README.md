@@ -93,7 +93,7 @@ See the test code under tests for example code.
 
 ## Development / Testing
 Submit issues and PRs through GitHub. 
-Testing is done with tox. [tox-conda](https://github.com/tox-dev/tox-conda) is used with tox.
+Testing is done with tox.
 
 
 ## License

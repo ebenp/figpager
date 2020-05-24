@@ -38,7 +38,6 @@ def test_main():
         V = 1 + X - Y ** 2
         speed = np.sqrt(U ** 2 + V ** 2)
 
-        #  Varying density along a streamline
         ax0 = fp.add_subplot()
         ax0.streamplot(X, Y, U, V, density=[0.5, 1])
         ax0.set_title("Varying Density")

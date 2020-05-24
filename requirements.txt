@@ -1,5 +1,6 @@
 # this installs in editable mode
 # -e .
+.
 
 matplotlib>=2.2.3
 configobj==5.0.6
