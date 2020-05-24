@@ -4,6 +4,7 @@ black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-
 Status](https://img.shields.io/github/workflow/status/ebenp/figpager/main-ci?style=for-the-badge)](https://github.com/ebenp/figpager/actions)
 [![GitHub Workflow
 Run Tox](https://github.com/ebenp/figpager/workflows/Run%20Tox/badge.svg)]
+(https://github.com/ebenp/figpager/actions)
 [![PyPI
 version](https://img.shields.io/pypi/v/figpager.svg?style=for-the-badge)](https://pypi.org/project/figpager/)
 [![PyPI
