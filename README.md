@@ -9,13 +9,17 @@ pyversions](https://img.shields.io/pypi/pyversions/figpager.svg?style=for-the-ba
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-# FigPager
+# figpager
 
 Python's [Matplotlib](http://matplotlib.org) can save plots with 
-various backends and single or multi pages. 
+various backends and single or multiple pages. 
 FigPager is a wrapper class for those backends. 
 
-This class reads layout specifications from an .ini file. FigPager 
+FigPager is similar to other third party Matplotlib [packages](https://matplotlib.org/thirdpartypackages/index.html)
+that allow figure elements to be added such as a title block, border and logo. 
+One example package is [mpl-template](https://austinorr.github.io/mpl-template/index.html). 
+
+The FigPager class reads layout specifications from an .ini file. FigPager 
 handles drawing boxes, text, images and lines referenced in .ini files on a figure canvas. 
 The class handles adding subplots, adding new pages in multipage backends and closing the figure.
 
@@ -26,7 +30,7 @@ pip install figpager
 ```
 
 ## Usage
-After install FigPager can be imported from figpager
+After install FigPager can be imported from figpager.
 ```
 from figpager import FigPager
 ```
