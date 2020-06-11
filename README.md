@@ -35,7 +35,7 @@ After install FigPager can be imported from figpager.
 from figpager import FigPager
 ```
 A FigPager instance is initialized with a paper size of A0-A10, B0-B10, letter, 
-legal or ledger.
+legal or ledger, the number of plot panels in a row as an integer and the number of plot panels as columns as an integer. 3 rows and 3 columns of panels for a figure of 3x3 is depicted below.
 ```
 fp = FigPager(
         "letter",
