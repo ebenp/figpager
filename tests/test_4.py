@@ -2,13 +2,16 @@
 
 # Plots from: https://matplotlib.org/3.2.1/gallery/images_contours_and_fields/plot_streamplot.html#sphx-glr-gallery-images-contours-and-fields-plot-streamplot-py
 import os
+
 import matplotlib as mpl
-if os.environ.get('DISPLAY','') == '':
-    print('no display found. Using non-interactive Agg backend')
-    mpl.use('Agg')
 import numpy as np
 
 from figpager import FigPager
+
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using non-interactive Agg backend')
+    mpl.use('Agg')
+
 
 # Reference:
 # https://matplotlib.org/devdocs/gallery/subplots_axes_and_figures/subplots_demo.html
@@ -23,7 +26,7 @@ def test_main():
     outfile = "./tests/out_4.pdf"
 
     fp = FigPager(
-        "letter", 2, 2, outfile=outfile, orientation="portrait", overwrite=True,
+        "letter", 2, 2, outfile=outfile, orientation="portrait", overwrite=True,sharex=True,sharey=True,
     )
     # Some example data to display
     x = np.linspace(0, 2 * np.pi, 400)

@@ -3,6 +3,7 @@ Module file that contains a FigPager class. A static function float_list_value i
 Currently PDF and PGF are supported in a multipage backend.
 
 Written by Eben Pendleton
+MIT License
 """
 # used to deep copy config
 import copy
@@ -89,6 +90,8 @@ class FigPager:
         subplotstartindex=None,
         direction="left-to-right",
         overwrite=False,
+        sharex=False,
+        sharey=False,
     ):
 
         """
@@ -116,6 +119,8 @@ class FigPager:
             subplotstartindex: (list of ints) (optional) First subplot on a page row and column index.
             direction: (string) (optional) subplot creation direction. Default is left-to-right.
             overwrite: (boolean) (optional) Boolean on whether to overwrite existing output. Default is True
+            sharex: share x axes in subplots. Default is False
+            sharey:share y axes in subplots.Default is False
         """
 
         # obtain the caller path
@@ -204,7 +209,6 @@ class FigPager:
 
             self.orientation = orientation
             self.paper_size = paper_size
-            self.papertype = paper_size
 
             # update the orientation based on paper size
             self._set_paper_size_orientation()
@@ -214,6 +218,8 @@ class FigPager:
         self.ncols = ncols
         self.height_ratios = height_ratios
         self.width_ratios = width_ratios
+        self.sharex = sharex
+        self.sharey = sharey
 
         # figure attributes
         self.fig = None
@@ -835,7 +841,7 @@ class FigPager:
         fig, ax = plt.subplots(
             constrained_layout=self.constrained_layout,
             figsize=(self.pagewidth_inch, self.pageheight_inch),
-            squeeze=False,
+            squeeze=False, sharex=self.sharex, sharey=self.sharey,
         )
 
         # set the patch here
@@ -1082,7 +1088,6 @@ class FigPager:
         bbox_inches=None,
         pad_inches=None,
         metadata=None,
-        papertype=None,
         subplotstartindex=None,
         direction="left-to-right",
     ):
@@ -1166,9 +1171,6 @@ class FigPager:
         if metadata is not None:
             self.metadata = metadata
 
-        if papertype is not None:
-            self.papertype = papertype
-
         if subplotstartindex == [0, 0] or subplotstartindex is None:
             self.subplotstartindex = None
         else:
@@ -1190,7 +1192,6 @@ class FigPager:
                     facecolor=self.facecolor,
                     edgecolor=self.edgecolor,
                     orientation=self.orientation,
-                    papertype=self.papertype,
                     transparent=self.transparent,
                     bbox_inches=self.bbox_inches,
                     pad_inches=self.pad_inches,
@@ -1207,7 +1208,6 @@ class FigPager:
                 facecolor=self.facecolor,
                 edgecolor=self.edgecolor,
                 orientation=self.orientation,
-                papertype=self.papertype,
                 transparent=self.transparent,
                 bbox_inches=self.bbox_inches,
                 pad_inches=self.pad_inches,
@@ -1242,7 +1242,6 @@ class FigPager:
                     facecolor=self.facecolor,
                     edgecolor=self.edgecolor,
                     orientation=self.orientation,
-                    papertype=self.papertype,
                     transparent=self.transparent,
                     bbox_inches=self.bbox_inches,
                     pad_inches=self.pad_inches,
@@ -1255,7 +1254,6 @@ class FigPager:
                     facecolor=self.facecolor,
                     edgecolor=self.edgecolor,
                     orientation=self.orientation,
-                    papertype=self.papertype,
                     transparent=self.transparent,
                     bbox_inches=self.bbox_inches,
                     pad_inches=self.pad_inches,
