@@ -12,12 +12,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Setup backend
-        run: DISPLAY=:0
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
+      - name: Setup backend
+        run: export DISPLAY=0.0; xhost +
       - name: Install Tox and any other packages
         run: pip install tox
       - name: Run Tox
