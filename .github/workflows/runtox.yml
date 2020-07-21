@@ -13,13 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup backend
-        run: |
-          sudo apt-get install xvfb
-          disp=:12
-          screen=0
-          geom=640x480x24
-          exec Xvfb $disp -screen $screen $geom 2>/tmp/Xvfb.log &
-          export DISPLAY=:12
+        run: export DISPLAY=:0;
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
