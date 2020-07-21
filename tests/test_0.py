@@ -11,9 +11,6 @@ if os.environ.get('DISPLAY','') == '':
     mpl.use('Agg')
 
 
-
-
-
 def test_main():
     # Initialize with a configuration that controls page margins
     # and plot spacing
