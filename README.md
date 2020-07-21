@@ -24,7 +24,7 @@ handles drawing boxes, text, images and lines referenced in .ini files on a figu
 The class handles adding subplots, adding new pages in multipage backends and closing the figure.
 
 ## Install
-Install using pip. figpager has been tested for Python 2.7, Python 3.6 and Python 3.7. See [requirements.txt](requirements.txt) for dependencies. 
+Install using pip. figpager has been tested for Python 2.7, Python 3.6 and Python 3.7. See [requirements.txt](https://github.com/ebenp/figpager/blob/master/requirements.txt) for dependencies. 
 ```
 pip install figpager
 ```
