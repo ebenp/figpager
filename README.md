@@ -11,7 +11,7 @@ MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=for-the-badg
 
 # figpager
 
-Python's [Matplotlib](http://matplotlib.org) can save plots with 
+[Matplotlib](http://matplotlib.org) is a graphics library for Python that can save plots with 
 various backends and single or multiple pages. 
 FigPager is a wrapper class for those backends. 
 
