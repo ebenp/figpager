@@ -22,5 +22,5 @@ jobs:
         # Run tox using the version of Python in `PATH`
         # set the display
         run: |
-          export DISPLAY=0.0
+          export MPLBACKEND="agg"
           tox -e py
