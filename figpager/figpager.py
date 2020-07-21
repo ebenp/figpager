@@ -14,6 +14,10 @@ import inspect
 import os
 
 import matplotlib as mpl
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using non-interactive Agg backend')
+    mpl.use('Agg')
+
 # used to drwa lines on the figure
 import matplotlib.lines as lines
 # matplotlib import used in setting figure and axes
@@ -29,12 +33,6 @@ from matplotlib.gridspec import GridSpec
 import configobj
 # import the validator
 from validate import Validator
-
-if os.environ.get('DISPLAY','') == '':
-    print('no display found. Using non-interactive Agg backend')
-    mpl.use('Agg')
-
-
 
 
 # set up the base string depending if we are running Python 2 or Python 3
