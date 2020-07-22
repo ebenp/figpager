@@ -16,7 +16,7 @@ def read(fname):
 
 setup(
     name="figpager",
-    version="0.18",
+    version="0.19",
     author="Eben Pendleton",
     author_email="4080051+ebenp@users.noreply.github.com",
     url="https://github.com/ebenp/figpager",
@@ -24,7 +24,7 @@ setup(
         "Code": "https://github.com/ebenp/figpager",
         "Issue tracker": "https://github.com/ebenp/figpager/issues",
     },
-    description=("A figure pager class"),
+    description=("A figure page creator class"),
     license="MIT",
     keywords="figure page matplotlib",
     packages=["figpager"],
@@ -34,10 +34,11 @@ setup(
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     classifiers=[
+        "Framework :: Matplotlib",
         "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
-        "Operating System :: OS Independent",
     ],
 )
