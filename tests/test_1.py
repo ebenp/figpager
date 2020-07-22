@@ -14,7 +14,7 @@ def test_main():
     # Initalize with a page size and number of plots
 
     # Initalize with an output file
-    outfile = "./tests/out_1.pdf"
+    outfile = "./tests/out_1.png"
 
     # plots an image from http://www.metmuseum.org/art/collection/search/334348 CC0 1.0 Public Domain
     fp = FigPager(
@@ -26,7 +26,7 @@ def test_main():
         orientation="portrait",
         height_ratios=[1, 1, 2],
         overwrite=True,
-        transparent=True,
+        transparent=False,
     )
     for r in range(1):
         if r > 0:
