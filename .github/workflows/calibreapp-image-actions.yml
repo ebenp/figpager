@@ -1,16 +1,12 @@
 name: Compress images
-on:
-  push:
-      paths:
-        - '**.jpg'
-        - '**.png'
+on:[push]
 jobs:
   build:
     name: calibreapp/image-actions
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - name: Compress Images
         uses: calibreapp/image-actions@master
