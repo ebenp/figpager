@@ -14,7 +14,7 @@ def test_main():
     # Initalize with a page size and number of plots
 
     # Initalize with an output file
-    outfile = "./tests/out_1.png"
+    outfile = "./tests/figpager.png"
 
     # plots an image from http://www.metmuseum.org/art/collection/search/334348 CC0 1.0 Public Domain
     fp = FigPager(
