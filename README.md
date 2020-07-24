@@ -23,6 +23,8 @@ The FigPager class reads layout specifications from an .ini file. FigPager
 handles drawing boxes, text, images and lines referenced in .ini files on a figure canvas. 
 The class handles adding subplots, adding new pages in multipage backends and closing the figure.
 
+<img src="https://github.com/ebenp/figpager/blob/master/tests/figpager.png"></img>
+
 ## Install
 Install using pip. figpager has been tested for Python 2.7, Python 3.6 and Python 3.7. See [requirements.txt](https://github.com/ebenp/figpager/blob/master/requirements.txt) for dependencies. 
 ```
