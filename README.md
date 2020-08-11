@@ -104,4 +104,4 @@ Testing is done with [tox](https://pypi.org/project/tox/). [pytest](https://pypi
 
 ## License
 figpager is released under the MIT license. 
-See [LICENSE.md](LICENSE.md) for details.
+See [LICENSE.md](https://github.com/ebenp/figpager/blob/master/LICENSE.md) for details.
