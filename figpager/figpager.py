@@ -13,12 +13,12 @@ import datetime
 import inspect
 import os
 
-import matplotlib as mpl
 if os.environ.get('DISPLAY','') == '':
+    import matplotlib as mpl
     print('no display found. Using non-interactive Agg backend')
     mpl.use('Agg')
 
-# used to drwa lines on the figure
+# used to draw lines on the figure
 import matplotlib.lines as lines
 # matplotlib import used in setting figure and axes
 import matplotlib.pyplot as plt
@@ -33,7 +33,6 @@ from matplotlib.gridspec import GridSpec
 import configobj
 # import the validator
 from validate import Validator
-
 
 # set up the base string depending if we are running Python 2 or Python 3
 try:
@@ -239,6 +238,8 @@ class FigPager:
 
         # save current filename as possible next filename base if not multipage
         self.new_fname = self.outfile
+        # list to append multiple filenames
+        self.newfnameall = []
 
         # saves current figure count for use in non multipage
         self.fignumber = 1
@@ -420,6 +421,7 @@ class FigPager:
                 "rotation": "integer",
                 "line_position_start": "float_list_value",
                 "line_position_end": "float_list_value",
+                "line_position_offset": "float_list_value",
                 "line_min": "float",
                 "line_max": "float",
                 "line_length": "string",
@@ -428,6 +430,7 @@ class FigPager:
                 "linestyle": "string",
                 "image_path": "string",
                 "image_position": "float_list_value",
+                "image_position_offset": "float_list_value",
             }
 
             data = myfile.read()
@@ -590,6 +593,15 @@ class FigPager:
                 self.frameheight = (
                     self.pageheight_inch - self.topmargin - self.bottommargin
                 )
+            else:
+                self.leftmargin = 0
+                self.rightmargin = 0
+                self.topmargin = 0
+                self.bottommargin = 0
+                self.marginpad = 0
+                self.framewidth = self.pagewidth_inch
+                self.frameheight = self.pageheight_inch
+
 
             self.source_path = self._parse_option("Layout", "Margin", "source_path")
             self.source_path_position = [
@@ -769,6 +781,23 @@ class FigPager:
         """
         pos = self._parse_option("Lines", label, "line_position_start")
         pos2 = self._parse_option("Lines", label, "line_position_end")
+
+        if self._parse_option("Lines", label, "image_position_offset") is not None:
+            pos[0] = pos[0] + float(
+                self._parse_option("Images", label, "image_position_offset")[0]
+            )
+            pos[1] = pos[1] + float(
+                self._parse_option("Images", label, "image_position_offset")[1]
+            )
+
+            pos2[0] = pos2[0] + float(
+                self._parse_option("Images", label, "image_position_offset")[0]
+            )
+            pos2[1] = pos2[1] + float(
+                self._parse_option("Images", label, "image_position_offset")[1]
+            )
+
+
         l1 = lines.Line2D(
             [pos[0] / self.pagewidth_inch, pos2[0] / self.pagewidth_inch],
             [pos[1] / self.pageheight_inch, pos2[1] / self.pageheight_inch],
@@ -794,6 +823,15 @@ class FigPager:
         """
         pos = self._parse_option("Images", label, "image_position")
         fname = self._parse_option("Images", label, "image_path")
+
+        if self._parse_option("Images", label, "image_position_offset") is not None:
+            pos[0] = pos[0] + float(
+                self._parse_option("Images", label, "image_position_offset")[0]
+            )
+            pos[1] = pos[1] + float(
+                self._parse_option("Images", label, "image_position_offset")[1]
+            )
+
         if fname:
             filename, file_extension = os.path.splitext(fname)
             img = plt.imread(fname, format=file_extension)
@@ -803,6 +841,7 @@ class FigPager:
             width, height = self.fig.get_size_inches() * self.fig.get_dpi()
             # We're specifying the position and size in figure coordinates, so the image
             # will shrink/grow as the figure is resized.
+            # zorder = 1 places the images on top
             ax = self.fig.add_axes(
                 [
                     pos[0] / self.pagewidth_inch,
@@ -810,7 +849,7 @@ class FigPager:
                     width1 / width,
                     height1 / height,
                 ],
-                anchor="SW",
+                anchor="SW",zorder=1,
             )
             ax.imshow(img)
             ax.axis("off")
@@ -1128,6 +1167,48 @@ class FigPager:
         Returns: fig; figure instance, ax; axes instances, gs; GridSpec, self.transform; Figure Transform
 
         """
+
+        if self.type in ["pdf", "pgf"]:
+            try:
+                self.pdf.savefig(
+                    self.fig,
+                    dpi=self.dpi,
+                    facecolor=self.facecolor,
+                    edgecolor=self.edgecolor,
+                    orientation=self.orientation,
+                    transparent=self.transparent,
+                    bbox_inches=self.bbox_inches,
+                    pad_inches=self.pad_inches,
+                    metadata=self.metadata,
+                )
+            except AttributeError as a:
+                if str(a) == "'NoneType' object has no attribute 'endStream'":
+                    raise AttributeError("Cannot add a new page to a closed pdf file.")
+        elif self.type is not None:
+            # number 02, 03 etc '{:02}'.format(1)
+            plt.savefig(
+                self.new_fname,
+                dpi=self.dpi,
+                facecolor=self.facecolor,
+                edgecolor=self.edgecolor,
+                orientation=self.orientation,
+                transparent=self.transparent,
+                bbox_inches=self.bbox_inches,
+                pad_inches=self.pad_inches,
+                metadata=self.metadata,
+            )
+            # append multiple filenames
+            self.newfnameall.append(self.new_fname)
+
+            filename, file_extension = os.path.splitext(self.outfile)
+            self.fignumber = self.fignumber + 1
+            self.new_fname = "{}_{}{}".format(
+                filename, "{:02}".format(self.fignumber), file_extension
+            )
+        else:
+            plt.show()
+        plt.close(self.fig)
+
         if paper_size is not None:
             self.paper_size = paper_size
 
@@ -1190,44 +1271,6 @@ class FigPager:
             # update from layout
             self._update_from_layout()
 
-        if self.type in ["pdf", "pgf"]:
-            try:
-                self.pdf.savefig(
-                    self.fig,
-                    dpi=self.dpi,
-                    facecolor=self.facecolor,
-                    edgecolor=self.edgecolor,
-                    orientation=self.orientation,
-                    transparent=self.transparent,
-                    bbox_inches=self.bbox_inches,
-                    pad_inches=self.pad_inches,
-                    metadata=self.metadata,
-                )
-            except AttributeError as a:
-                if str(a) == "'NoneType' object has no attribute 'endStream'":
-                    raise AttributeError("Cannot add a new page to a closed pdf file.")
-        elif self.type is not None:
-            # probably number 02, 03 etc '{:02}'.format(1)
-            plt.savefig(
-                self.new_fname,
-                dpi=self.dpi,
-                facecolor=self.facecolor,
-                edgecolor=self.edgecolor,
-                orientation=self.orientation,
-                transparent=self.transparent,
-                bbox_inches=self.bbox_inches,
-                pad_inches=self.pad_inches,
-                metadata=self.metadata,
-            )
-
-            filename, file_extension = os.path.splitext(self.outfile)
-            self.fignumber = self.fignumber + 1
-            self.new_fname = "{}_{}{}".format(
-                filename, "{:02}".format(self.fignumber), file_extension
-            )
-        else:
-            plt.show()
-        plt.close(self.fig)
         self.fig, self.ax, self.gs, self.transform = self.draw_page()
 
         return self.fig, self.ax, self.gs, self.transform
@@ -1253,6 +1296,11 @@ class FigPager:
                     pad_inches=self.pad_inches,
                     metadata=self.metadata,
                 )
+                self.newfnameall.append(self.new_fname)
+
+                # update the outfile name if needed
+                if self.newfnameall:
+                    self.outfile = '\n'.join(self.newfnameall)
             else:
                 self.pdf.savefig(
                     self.fig,
@@ -1277,6 +1325,8 @@ class FigPager:
 
                 # Remember to close the object - otherwise the file will not be usable
                 self.pdf.close()
+
+
         else:
             plt.show()
             plt.close(self.fig)

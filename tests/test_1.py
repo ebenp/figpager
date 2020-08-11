@@ -125,9 +125,10 @@ def test_main():
         ax4.plot(seed_points[0], seed_points[1], "bo")
         ax4.set(xlim=(-w, w), ylim=(-w, w))
 
-    print("outfile: " + outfile)
     # close the figure
     fp.close()
+    print("outfile: " + fp.outfile)
+
     print("--Done!--")
 
 
