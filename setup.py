@@ -17,10 +17,14 @@ def read(fname):
 setup(
     name="figpager",
 <<<<<<< HEAD
+<<<<<<< HEAD
     version="0.19",
 =======
     version="0.23",
 >>>>>>> Updated to 0.23
+=======
+    version="0.24",
+>>>>>>> bump to 0.24
     author="Eben Pendleton",
     author_email="4080051+ebenp@users.noreply.github.com",
     url="https://github.com/ebenp/figpager",
