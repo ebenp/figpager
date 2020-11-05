@@ -21,7 +21,7 @@ def test_main():
         "letter",
         3,
         2,
-        layout="Report",
+        layout="report",
         outfile=outfile,
         orientation="portrait",
         height_ratios=[1, 1, 2],
