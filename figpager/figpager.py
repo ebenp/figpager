@@ -13,6 +13,7 @@ import datetime
 import inspect
 import os
 
+# backend for display in GitHub Actions
 if os.environ.get('DISPLAY','') == '':
     import matplotlib as mpl
     print('no display found. Using non-interactive Agg backend')
@@ -97,6 +98,7 @@ class FigPager:
         overwrite=False,
         sharex=False,
         sharey=False,
+        draft=True,
     ):
 
         """
@@ -125,7 +127,8 @@ class FigPager:
             direction: (string) (optional) subplot creation direction. Default is left-to-right.
             overwrite: (boolean) (optional) Boolean on whether to overwrite existing output. Default is True
             sharex: share x axes in subplots. Default is False
-            sharey:share y axes in subplots.Default is False
+            sharey:share y axes in subplots. Default is False
+            draft: Add draft stamp if available from ini. Default is True
         """
 
         # obtain the caller path
@@ -225,6 +228,7 @@ class FigPager:
         self.width_ratios = width_ratios
         self.sharex = sharex
         self.sharey = sharey
+        self.draft = draft
 
         # figure attributes
         self.fig = None
@@ -1009,6 +1013,8 @@ class FigPager:
         # add any layout set text here
         for k in self.config["Text"].keys():
             if self._parse_option("Text", k, "text") is not None:
+                if 'draft' in self._parse_option("Text", k, "text").lower():
+                    if not self.draft: continue
                 self._text_from_label("Text", k, self._parse_option("Text", k, "text"))
 
         # add any layout set images here
@@ -1022,6 +1028,9 @@ class FigPager:
         # add any layout set watermarks here
         for k in self.config["Watermark"].keys():
             if self._parse_option("Watermark", k, "text") is not None:
+                # check for draft watermark status and whether user has overridden it
+                if 'draft' in self._parse_option("Watermark", k, "text").lower():
+                    if not self.draft: continue
                 self._text_from_label(
                     "Watermark", k, self._parse_option("Watermark", k, "text")
                 )
