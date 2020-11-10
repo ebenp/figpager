@@ -20,6 +20,7 @@ setup(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     version="0.19",
 =======
     version="0.23",
@@ -33,6 +34,9 @@ setup(
 =======
     version="0.26",
 >>>>>>> Addition of draft keyword option and tests (#5)
+=======
+    version="0.27",
+>>>>>>> Added updating start position when advancing to a new page (#9)
     author="Eben Pendleton",
     author_email="4080051+ebenp@users.noreply.github.com",
     url="https://github.com/ebenp/figpager",

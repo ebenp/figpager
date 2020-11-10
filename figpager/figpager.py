@@ -282,6 +282,9 @@ class FigPager:
         # transform storage
         self.transform = None
 
+        # subplt counter storage
+        self.subplotcounter = 0
+
         # update from layout
         self._update_from_layout()
         # draw the initial page
@@ -1035,11 +1038,16 @@ class FigPager:
                         pos = [pos[0] + 1, 0]
 
                     else:
-                        # reset the starting position
+                        # save the starting position
                         pos = self.subplotstartindex
+
                         self.fig, self.ax, self.gs, self.transform = self.add_page(
                             subplotstartindex=self.subplotstartindex
                         )
+                        # reset the
+                        # self.subplotstartindex = pos
+                        self.currentsubplotindex = pos
+
 
             if self.direction == "top-to-bottom":
                 if self.subplotstartindex is None:
@@ -1064,15 +1072,21 @@ class FigPager:
                         self.fig, self.ax, self.gs, self.transform = self.add_page(
                             subplotstartindex=self.subplotstartindex
                         )
+
+                        # use the existing column and add a row
+                        self.subplotstartindex = [pos[0] + 1, pos[1]]
+
         else:
             self.subplotstartindex = pos
 
         self.currentsubplotindex = pos
+        # advance the subplot counter. Makes a unique subplot label
+        self.subplotcounter = self.subplotcounter + 1
 
         if gs is None:
             return self.fig.add_subplot(
                 self.gs[pos[0], pos[1]],
-                label="({},{})".format(pos[0], pos[1]),
+                label="({},{}, {})".format(pos[0], pos[1],  self.subplotcounter),
                 **kwargs
             )
         else:
@@ -1083,9 +1097,9 @@ class FigPager:
 
             return self.fig.add_subplot(
                 gs,
-                label="({},{})".format(
-                    self.currentsubplotindex[0], self.currentsubplotindex[1]
-                ),
+                label="({},{}, {})".format(
+                    self.currentsubplotindex[0], self.currentsubplotindex[1],
+                    self.subplotcounter),
                 **kwargs
             )
 
@@ -1136,6 +1150,7 @@ class FigPager:
             defaults depend on the image format and backend:
             subplotstartindex: (list of ints) (optional) First subplot on a page row and column index.
             direction: (string) (optional) subplot creation direction. Default is Left-to-right.
+            gs: (optional) GridSpec specification for more advanced positions
 
         Returns: fig; figure instance, ax; axes instances, gs; GridSpec, self.transform; Figure Transform
 
@@ -1189,7 +1204,7 @@ class FigPager:
         if metadata is not None:
             self.metadata = metadata
 
-        if subplotstartindex == [0, 0] or subplotstartindex is None:
+        if subplotstartindex is None:
             self.subplotstartindex = None
         else:
             self.subplotstartindex = subplotstartindex
