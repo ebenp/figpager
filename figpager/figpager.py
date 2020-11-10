@@ -99,6 +99,8 @@ class FigPager:
         sharex=False,
         sharey=False,
         draft=True,
+        wspace=0.2,
+        hspace=0.2,
     ):
 
         """
@@ -129,6 +131,8 @@ class FigPager:
             sharex: share x axes in subplots. Default is False
             sharey:share y axes in subplots. Default is False
             draft: Add draft stamp if available from ini. Default is True
+            wspace: Add height spacing for subplots adjust. Default is 0.2
+            hspace: Add horizontal spacing for subplots adjust. Default is 0.2
         """
 
         # obtain the caller path
@@ -229,6 +233,8 @@ class FigPager:
         self.sharex = sharex
         self.sharey = sharey
         self.draft = draft
+        self.wspace = wspace
+        self.hspace = hspace
 
         # figure attributes
         self.fig = None
@@ -1007,6 +1013,7 @@ class FigPager:
                 bottom=(self.bottommargin + self.marginpad) / self.pageheight_inch,
                 top=(self.frameheight + self.bottommargin - self.marginpad)
                 / self.pageheight_inch,
+                hspace=self.hspace, wspace=self.wspace,
             )
 
         # This resets the margins and other parameters to layout
@@ -1158,6 +1165,8 @@ class FigPager:
         metadata=None,
         subplotstartindex=None,
         direction="left-to-right",
+        wspace=None,
+        hspace=None,
     ):
 
         """
@@ -1187,6 +1196,8 @@ class FigPager:
             subplotstartindex: (list of ints) (optional) First subplot on a page row and column index.
             direction: (string) (optional) subplot creation direction. Default is Left-to-right.
             gs: (optional) GridSpec specification for more advanced positions
+            wspace: Add height spacing for subplots adjust. Default is object's init
+            hspace: Add horizontal spacing for subplots adjust. Default is object's init
 
         Returns: fig; figure instance, ax; axes instances, gs; GridSpec, self.transform; Figure Transform
 
@@ -1288,6 +1299,12 @@ class FigPager:
             self.subplotstartindex = subplotstartindex
 
         self.direction = direction
+
+        if wspace is not None:
+            self.wspace = wspace
+
+        if hspace is not None:
+            self.hspace = hspace
 
         if layout is not None:
             self.layout = layout
