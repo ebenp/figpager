@@ -21,6 +21,7 @@ setup(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     version="0.19",
 =======
     version="0.23",
@@ -37,6 +38,9 @@ setup(
 =======
     version="0.27",
 >>>>>>> Added updating start position when advancing to a new page (#9)
+=======
+    version="0.28",
+>>>>>>> Added wspace and hspace  (#10)
     author="Eben Pendleton",
     author_email="4080051+ebenp@users.noreply.github.com",
     url="https://github.com/ebenp/figpager",
