@@ -22,6 +22,7 @@ setup(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     version="0.19",
 =======
     version="0.23",
@@ -41,6 +42,9 @@ setup(
 =======
     version="0.28",
 >>>>>>> Added wspace and hspace  (#10)
+=======
+    version="0.29",
+>>>>>>> Moved example report.ini to tests and updated caption in README.md (#12)
     author="Eben Pendleton",
     author_email="4080051+ebenp@users.noreply.github.com",
     url="https://github.com/ebenp/figpager",
