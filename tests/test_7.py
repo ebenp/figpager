@@ -20,7 +20,7 @@ def test_main():
         "letter",
         3,
         2,
-        layout="report",
+        layout="./tests/report.ini",
         outfile=outfile,
         orientation="portrait",
         height_ratios=[1, 1, 2],

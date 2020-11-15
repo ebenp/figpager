@@ -16,7 +16,7 @@ def read(fname):
 
 setup(
     name="figpager",
-    version="0.28",
+    version="0.29",
     author="Eben Pendleton",
     author_email="4080051+ebenp@users.noreply.github.com",
     url="https://github.com/ebenp/figpager",
