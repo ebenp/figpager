@@ -7,6 +7,7 @@ import numpy as np
 
 from figpager import FigPager
 
+
 def test_main():
     # Initalize with a configuration that controls page margins
     # and plot spacing

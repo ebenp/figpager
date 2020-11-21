@@ -13,15 +13,7 @@ import datetime
 import inspect
 import os
 
-<<<<<<< HEAD
 import matplotlib as mpl
-=======
-# backend for display in GitHub Actions
->>>>>>> Addition of draft keyword option and tests (#5)
-if os.environ.get('DISPLAY','') == '':
-    print('no display found. Using non-interactive Agg backend')
-    mpl.use('Agg')
-
 # used to drwa lines on the figure
 import matplotlib.lines as lines
 # matplotlib import used in setting figure and axes
@@ -37,6 +29,13 @@ from matplotlib.gridspec import GridSpec
 import configobj
 # import the validator
 from validate import Validator
+
+# backend for display in GitHub Actions
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using non-interactive Agg backend')
+    mpl.use('Agg')
+
+
 
 
 # set up the base string depending if we are running Python 2 or Python 3

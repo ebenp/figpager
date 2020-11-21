@@ -16,35 +16,7 @@ def read(fname):
 
 setup(
     name="figpager",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    version="0.19",
-=======
-    version="0.23",
->>>>>>> Updated to 0.23
-=======
-    version="0.24",
->>>>>>> bump to 0.24
-=======
-    version="0.25",
->>>>>>> bump to 0.25
-=======
-    version="0.26",
->>>>>>> Addition of draft keyword option and tests (#5)
-=======
-    version="0.27",
->>>>>>> Added updating start position when advancing to a new page (#9)
-=======
-    version="0.28",
->>>>>>> Added wspace and hspace  (#10)
-=======
-    version="0.29",
->>>>>>> Moved example report.ini to tests and updated caption in README.md (#12)
+    version="0.30",
     author="Eben Pendleton",
     author_email="4080051+ebenp@users.noreply.github.com",
     url="https://github.com/ebenp/figpager",
