@@ -1,21 +1,15 @@
 # Test of Report configuration
 import os
-<<<<<<< Updated upstream
 
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-
-from figpager import FigPager
-
+# backend for display in GitHub Actions
 if os.environ.get('DISPLAY','') == '':
     print('no display found. Using non-interactive Agg backend')
-    mpl.use('Agg')
+    import matplotlib
+    matplotlib.use('Agg')
 
-=======
 import matplotlib.pyplot as plt
 
 from figpager import FigPager
->>>>>>> Stashed changes
 
 def test_main():
     # Initialize with a configuration that controls page margins

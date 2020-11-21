@@ -15,18 +15,10 @@ import os
 
 # backend for display in GitHub Actions
 if os.environ.get('DISPLAY','') == '':
-<<<<<<< Updated upstream
     print('no display found. Using non-interactive Agg backend')
     import matplotlib
-    matplotlib.use('Agg')
-else:
-    import matplotlib
-=======
-    import matplotlib
-    print('no display found. Using non-interactive Agg backend')
     matplotlib.use('Agg')
 
->>>>>>> Stashed changes
 # used to draw lines on the figure
 import matplotlib.lines as lines
 # matplotlib import used in setting figure and axes
