@@ -33,6 +33,7 @@ from validate import Validator
 # backend for display in GitHub Actions
 if os.environ.get('DISPLAY','') == '':
     print('no display found. Using non-interactive Agg backend')
+    import matplotlib as mpl
     mpl.use('Agg')
 
 
