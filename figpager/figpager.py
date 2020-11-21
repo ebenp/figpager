@@ -13,13 +13,14 @@ import datetime
 import inspect
 import os
 
-import matplotlib as mpl
 # backend for display in GitHub Actions
 if os.environ.get('DISPLAY','') == '':
     print('no display found. Using non-interactive Agg backend')
     import matplotlib as mpl
     mpl.use('Agg')
-# used to drwa lines on the figure
+else:
+    import matplotlib as mpl
+# used to draw lines on the figure
 import matplotlib.lines as lines
 # matplotlib import used in setting figure and axes
 import matplotlib.pyplot as plt
