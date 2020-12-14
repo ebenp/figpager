@@ -1,6 +1,7 @@
 name: compress images
 on:
-  publish:
+   release:
+    types: [published]
 jobs:
   compress:
     runs-on: ubuntu-latest
