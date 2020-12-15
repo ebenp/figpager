@@ -161,8 +161,8 @@ class FigPager:
                         raise IOError(
                             "Output file already exists and user chose not to overwrite."
                         )
-                # hold file type
-                self.type = os.path.splitext(outfile)[1][1:]
+            # hold file type
+            self.type = os.path.splitext(outfile)[1][1:]
 
             # hold outfile full path
             self.outfile = outfile
