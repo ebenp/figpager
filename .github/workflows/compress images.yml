@@ -1,7 +1,6 @@
 name: compress images
-on:
-   release:
-    types: [published]
+on: 
+   pull_request:
 jobs:
   compress:
     runs-on: ubuntu-latest
