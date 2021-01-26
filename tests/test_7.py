@@ -46,7 +46,7 @@ def test_main():
         ax0.streamplot(X, Y, U, V, density=[0.5, 1])
         ax0.set_title("Varying Density")
 
-        fp.text_from_label("Figure Title", "Figure 1")
+        fp.text_at_label("Figure Title", "Figure 1")
 
         # Varying color along a streamline
         ax1 = fp.add_subplot()

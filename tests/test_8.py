@@ -1,4 +1,4 @@
-# Test for multipage support
+# Test for text from label support
 
 # Plots from: https://matplotlib.org/3.2.1/gallery/images_contours_and_fields/plot_streamplot.html#sphx-glr-gallery-images-contours-and-fields-plot-streamplot-py
 import os
@@ -14,7 +14,7 @@ def test_main():
     # Initalize with a page size and number of plots
 
     # Initalize with an output file
-    outfile = "./tests/out_6.pdf"
+    outfile = "./tests/out_8.pdf"
 
     # plots an image from http://www.metmuseum.org/art/collection/search/334348 CC0 1.0 Public Domain
     fp = FigPager(
@@ -27,13 +27,19 @@ def test_main():
         height_ratios=[1, 1, 2],
         overwrite=True,
         transparent=False,
+        wspace=0.1,
+        hspace=0.1,
     )
+    titles = ['Document 1', 'Document 2']
 
     for r in range(2):
-        #if r > 0:
-        #    fp.add_page(
-        #        nrows=3, ncols=2, orientation="portrait", height_ratios=[1, 1, 2]
-        #    )
+        fp.config['Text']['Document Title']['text'] = titles[r]
+
+        if r > 0:
+
+            fp.add_page(
+                nrows=3, ncols=2, orientation="portrait", height_ratios=[1, 1, 2], wspace=0.3, hspace=0.3,
+            )
         w = 3
         Y, X = np.mgrid[-w:w:100j, -w:w:100j]
         U = -1 - X ** 2 + Y
@@ -44,7 +50,9 @@ def test_main():
         ax0.streamplot(X, Y, U, V, density=[0.5, 1])
         ax0.set_title("Varying Density")
 
-        fp.text_at_label("Figure Title", "Figure 1")
+        # to use new values text at function?
+        # would skip over any set values
+        fp.text_at_label("Figure Title", 'Figure X')
 
         # Varying color along a streamline
         ax1 = fp.add_subplot()

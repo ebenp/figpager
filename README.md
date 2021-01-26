@@ -89,8 +89,13 @@ fp.add_page(
                 nrows=3, ncols=2, orientation="portrait", height_ratios=[1, 1, 2]
            )
 ```
+FigPager options read from an .ini file can be updated via the instance's config. The syntax is config[section][subsection][option] = value.
+```
+fp.config['Text']['Document Title']['text']
+```
 
-The FigPager instance can be be closed following the example below.
+
+Finally, FigPager instance can be closed following the example below.
 ```
 fp.close()
 ```

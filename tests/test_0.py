@@ -1,13 +1,12 @@
 # Test of Report configuration
 import os
-
 # backend for display in GitHub Actions
 if os.environ.get('DISPLAY','') == '':
     print('no display found. Using non-interactive Agg backend')
     import matplotlib
     matplotlib.use('Agg')
 
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt  # isort: split
 
 from figpager import FigPager
 

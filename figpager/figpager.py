@@ -5,6 +5,7 @@ Currently PDF and PGF are supported in a multipage backend.
 Written by Eben Pendleton
 MIT License
 """
+
 # used to deep copy config
 import copy
 # used in metadata
@@ -20,7 +21,9 @@ if os.environ.get('DISPLAY','') == '':
     matplotlib.use('Agg')
 
 # used to draw lines on the figure
-import matplotlib.lines as lines
+import matplotlib.lines as lines  # isort: split
+# used to validate and read in ini files
+import configobj
 # matplotlib import used in setting figure and axes
 import matplotlib.pyplot as plt
 # import package resources to get ini
@@ -29,9 +32,6 @@ import pkg_resources
 from matplotlib.backends.backend_pdf import PdfPages
 # used to set the plot layout in the figure
 from matplotlib.gridspec import GridSpec
-
-# used to validate and read in ini files
-import configobj
 # import the validator
 from validate import Validator
 
@@ -64,7 +64,6 @@ def float_list_value(v, minl=None, maxl=None, minv=None, maxv=None):
 
     return [is_float(mem, min=minv, max=maxv) for mem in is_list(v, minl, maxl)]
 
-
 class FigPager:
 
     """ Class to use matplotlib's figure with multi and single page outputs """
@@ -74,7 +73,7 @@ class FigPager:
     path = os.path.abspath(__file__)
 
     # used to find ini files saved in the package
-    page_layout_path = pkg_resources.resource_filename('figpager', 'page_layout/')
+    page_layout_path = pkg_resources.resource_filename("figpager", "page_layout/")
 
     def __init__(
         self,
@@ -167,8 +166,6 @@ class FigPager:
             # hold outfile full path
             self.outfile = outfile
 
-
-
         # hold multipage indicator
         self.multipage = False
         if self.type in ["pdf", "pgf"]:
@@ -204,8 +201,7 @@ class FigPager:
 
             # read in the ini file of paper sizes
             config = configobj.ConfigObj(
-                os.path.join(self.page_layout_path, "paper_sizes.ini"),
-                configspec=spec,
+                os.path.join(self.page_layout_path, "paper_sizes.ini"), configspec=spec,
             )
 
             # validate against the config above
@@ -533,6 +529,30 @@ class FigPager:
             except KeyError:
                 return None
 
+    def _parse_option(self, section, subsection, option):
+
+        """
+        Parse a given config option given the file's section, subsection and option.
+        Return None if option is not found
+        Args:
+            section: config file section. [example]
+            subsection: config file subsection. [[example]]
+            option: config file option. example=True
+
+        Returns: option value or None
+
+        """
+
+        try:
+            return self.config[section][subsection][option]
+        except KeyError:
+            try:
+                return self.config[section][subsection][self.paper_size.title()][
+                    self.orientation.title()
+                ][option]
+            except KeyError:
+                return None
+
     def _update_from_layout(self):
 
         """
@@ -574,34 +594,7 @@ class FigPager:
 
             self.marginframe = self._parse_option("Layout", "Margin", "margin_frame")
             if self.marginframe:
-                self.constrained_layout = False
-                self.leftmargin = (
-                    self._parse_option("Layout", "Margin", "left_margin")
-                    * self.figure_unit_conversion
-                )
-                self.rightmargin = (
-                    self._parse_option("Layout", "Margin", "right_margin")
-                    * self.figure_unit_conversion
-                )
-                self.topmargin = (
-                    self._parse_option("Layout", "Margin", "top_margin")
-                    * self.figure_unit_conversion
-                )
-                self.bottommargin = (
-                    self._parse_option("Layout", "Margin", "bottom_margin")
-                    * self.figure_unit_conversion
-                )
-                self.marginpad = (
-                    self._parse_option("Layout", "Margin", "margin_pad")
-                    * self.figure_unit_conversion
-                )
-
-                self.framewidth = (
-                    self.pagewidth_inch - self.leftmargin - self.rightmargin
-                )
-                self.frameheight = (
-                    self.pageheight_inch - self.topmargin - self.bottommargin
-                )
+                self._update_marginframe_from_layout()
 
             self.source_path = self._parse_option("Layout", "Margin", "source_path")
             self.source_path_position = [
@@ -618,7 +611,38 @@ class FigPager:
             # read text
             self.configtext = self.config["Text"]
 
-    def _text_from_label(self, section, label, txt):
+    def _update_marginframe_from_layout(self):
+        """
+        Update the mergin frame to what's in the current layout config.
+        Returns: None
+
+        """
+        self.constrained_layout = False
+        self.leftmargin = (
+            self._parse_option("Layout", "Margin", "left_margin")
+            * self.figure_unit_conversion
+        )
+        self.rightmargin = (
+            self._parse_option("Layout", "Margin", "right_margin")
+            * self.figure_unit_conversion
+        )
+        self.topmargin = (
+            self._parse_option("Layout", "Margin", "top_margin")
+            * self.figure_unit_conversion
+        )
+        self.bottommargin = (
+            self._parse_option("Layout", "Margin", "bottom_margin")
+            * self.figure_unit_conversion
+        )
+        self.marginpad = (
+            self._parse_option("Layout", "Margin", "margin_pad")
+            * self.figure_unit_conversion
+        )
+
+        self.framewidth = self.pagewidth_inch - self.leftmargin - self.rightmargin
+        self.frameheight = self.pageheight_inch - self.topmargin - self.bottommargin
+
+    def _text_at_label(self, section, label, txt):
 
         """
         Find label and write text at label position with label font characteristics
@@ -827,7 +851,7 @@ class FigPager:
             ax.imshow(img)
             ax.axis("off")
 
-    def text_from_label(self, label, txt):
+    def text_at_label(self, label, txt):
         """
                Public function to find label and write text at label position with label font characteristics.
                Assumes label is in text section
@@ -839,7 +863,7 @@ class FigPager:
                Returns: None
 
         """
-        return self._text_from_label("Text", label, txt)
+        return self._text_at_label("Text", label, txt)
 
     def draw_page(self):
         """
@@ -859,7 +883,9 @@ class FigPager:
         fig, ax = plt.subplots(
             constrained_layout=self.constrained_layout,
             figsize=(self.pagewidth_inch, self.pageheight_inch),
-            squeeze=False, sharex=self.sharex, sharey=self.sharey,
+            squeeze=False,
+            sharex=self.sharex,
+            sharey=self.sharey,
         )
 
         # set the patch here
@@ -973,19 +999,21 @@ class FigPager:
                 bottom=(self.bottommargin + self.marginpad) / self.pageheight_inch,
                 top=(self.frameheight + self.bottommargin - self.marginpad)
                 / self.pageheight_inch,
-                hspace=self.hspace, wspace=self.wspace,
+                hspace=self.hspace,
+                wspace=self.wspace,
             )
 
-        # This resets the margins and other parameters to layout
+        # This resets the margins to the margin layout
         if self.marginframe:
-            self._update_from_layout()
+            self._update_marginframe_from_layout()
 
         # add any layout set text here
         for k in self.config["Text"].keys():
             if self._parse_option("Text", k, "text") is not None:
-                if 'draft' in self._parse_option("Text", k, "text").lower():
-                    if not self.draft: continue
-                self._text_from_label("Text", k, self._parse_option("Text", k, "text"))
+                if "draft" in self._parse_option("Text", k, "text").lower():
+                    if not self.draft:
+                        continue
+                self._text_at_label("Text", k, self._parse_option("Text", k, "text"))
 
         # add any layout set images here
         for k in self.config["Images"].keys():
@@ -999,9 +1027,10 @@ class FigPager:
         for k in self.config["Watermark"].keys():
             if self._parse_option("Watermark", k, "text") is not None:
                 # check for draft watermark status and whether user has overridden it
-                if 'draft' in self._parse_option("Watermark", k, "text").lower():
-                    if not self.draft: continue
-                self._text_from_label(
+                if "draft" in self._parse_option("Watermark", k, "text").lower():
+                    if not self.draft:
+                        continue
+                self._text_at_label(
                     "Watermark", k, self._parse_option("Watermark", k, "text")
                 )
 
@@ -1051,7 +1080,6 @@ class FigPager:
                         # self.subplotstartindex = pos
                         self.currentsubplotindex = pos
 
-
             if self.direction == "top-to-bottom":
                 if self.subplotstartindex is None:
                     pos = [0, 0]
@@ -1089,7 +1117,7 @@ class FigPager:
         if gs is None:
             return self.fig.add_subplot(
                 self.gs[pos[0], pos[1]],
-                label="({},{}, {})".format(pos[0], pos[1],  self.subplotcounter),
+                label="({},{}, {})".format(pos[0], pos[1], self.subplotcounter),
                 **kwargs
             )
         else:
@@ -1101,8 +1129,10 @@ class FigPager:
             return self.fig.add_subplot(
                 gs,
                 label="({},{}, {})".format(
-                    self.currentsubplotindex[0], self.currentsubplotindex[1],
-                    self.subplotcounter),
+                    self.currentsubplotindex[0],
+                    self.currentsubplotindex[1],
+                    self.subplotcounter,
+                ),
                 **kwargs
             )
 
